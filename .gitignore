@@ -1,0 +1,7 @@
+node_modules
+*.vg
+dist
+.eslintcache
+yarn-error.log
+*.gfa
+vg
