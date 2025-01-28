@@ -18,7 +18,7 @@ if (process.env.NODE_ENV === 'production') {
   await esbuild.build({
     entryPoints: ['src/index.ts'],
     bundle: true,
-    globalName: 'JBrowsePluginGraphGenomeViewer',
+    globalName: 'JBrowsePluginLDViewer',
     sourcemap: true,
     outfile: 'dist/jbrowse-plugin-graphgenomeviewer.umd.production.min.js',
     metafile: true,
@@ -55,7 +55,7 @@ if (process.env.NODE_ENV === 'production') {
   let ctx = await esbuild.context({
     entryPoints: ['src/index.ts'],
     bundle: true,
-    globalName: 'JBrowsePluginGraphGenomeViewer',
+    globalName: 'JBrowsePluginLDViewer',
     outfile: 'dist/out.js',
     metafile: true,
     plugins: [

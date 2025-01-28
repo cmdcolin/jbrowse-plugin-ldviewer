@@ -1,29 +1,29 @@
 {
   "plugins": [
     {
-      "name": "GraphGenomeViewer",
+      "name": "LDViewer",
       "url": "http://localhost:9002/dist/out.js"
     }
   ],
   "assemblies": [
     {
-      "name": "hg38",
-      "aliases": ["GRCh38"],
+      "name": "hg19",
+      "aliases": ["GRCh37"],
       "sequence": {
         "type": "ReferenceSequenceTrack",
-        "trackId": "P6R5xbRqRr",
+        "trackId": "Pd8Wh30ei9R",
         "adapter": {
           "type": "BgzipFastaAdapter",
           "fastaLocation": {
-            "uri": "https://jbrowse.org/genomes/GRCh38/fasta/hg38.prefix.fa.gz",
+            "uri": "https://jbrowse.org/genomes/hg19/fasta/hg19.fa.gz",
             "locationType": "UriLocation"
           },
           "faiLocation": {
-            "uri": "https://jbrowse.org/genomes/GRCh38/fasta/hg38.prefix.fa.gz.fai",
+            "uri": "https://jbrowse.org/genomes/hg19/fasta/hg19.fa.gz.fai",
             "locationType": "UriLocation"
           },
           "gziLocation": {
-            "uri": "https://jbrowse.org/genomes/GRCh38/fasta/hg38.prefix.fa.gz.gzi",
+            "uri": "https://jbrowse.org/genomes/hg19/fasta/hg19.fa.gz.gzi",
             "locationType": "UriLocation"
           }
         }
@@ -32,7 +32,7 @@
         "adapter": {
           "type": "RefNameAliasAdapter",
           "location": {
-            "uri": "https://s3.amazonaws.com/jbrowse.org/genomes/GRCh38/hg38_aliases.txt",
+            "uri": "https://s3.amazonaws.com/jbrowse.org/genomes/hg19/hg19_aliases.txt",
             "locationType": "UriLocation"
           }
         }
@@ -41,7 +41,7 @@
         "adapter": {
           "type": "CytobandAdapter",
           "cytobandLocation": {
-            "uri": "https://s3.amazonaws.com/jbrowse.org/genomes/GRCh38/cytoBand.txt"
+            "uri": "https://s3.amazonaws.com/jbrowse.org/genomes/hg19/cytoBand.txt"
           }
         }
       }
@@ -49,56 +49,30 @@
   ],
   "tracks": [
     {
-      "type": "FeatureTrack",
-      "trackId": "gencode.v44.annotation.sorted.gff3",
-      "name": "GENCODE v44",
-      "category": ["Annotation"],
+      "type": "VariantTrack",
+      "trackId": "1kGP_high_coverage_Illumina.chr1.filtered.SNV_INDEL_SV_phased_panel.vcf",
+      "name": "1kGP_high_coverage_Illumina.chr1.filtered.SNV_INDEL_SV_phased_panel.vcf",
+      "metadata": {
+        "samples": "The population codes were manually downloaded from internationalgenome.org, filtered and sorted for samples that have a population code"
+      },
       "adapter": {
-        "type": "Gff3TabixAdapter",
-        "gffGzLocation": {
-          "uri": "https://jbrowse.org/demos/app/gencode.v44.annotation.sorted.gff3.gz",
+        "type": "VcfTabixAdapter",
+        "samplesTsvLocation": {
+          "uri": "https://jbrowse.org/genomes/hg19/1000g.sorted.csv.gz"
+        },
+        "vcfGzLocation": {
+          "uri": "https://ftp-trace.ncbi.nlm.nih.gov/1000genomes/ftp/release/20130502/ALL.chr1.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.vcf.gz",
           "locationType": "UriLocation"
         },
         "index": {
           "location": {
-            "uri": "https://jbrowse.org/demos/app/gencode.v44.annotation.sorted.gff3.gz.tbi",
+            "uri": "https://ftp-trace.ncbi.nlm.nih.gov/1000genomes/ftp/release/20130502/ALL.chr1.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.vcf.gz.tbi",
             "locationType": "UriLocation"
           },
           "indexType": "TBI"
         }
       },
-      "assemblyNames": ["hg38"],
-      "displays": [
-        {
-          "type": "LinearBasicDisplay",
-          "displayId": "gencode_nclist_v36_hg38_linear",
-          "renderer": {
-            "type": "SvgFeatureRenderer",
-            "labels": {
-              "name": "jexl:get(feature,'gene_name')"
-            }
-          }
-        }
-      ]
-    }
-  ],
-  "aggregateTextSearchAdapters": [
-    {
-      "type": "TrixTextSearchAdapter",
-      "textSearchAdapterId": "hg38-index",
-      "ixFilePath": {
-        "uri": "https://jbrowse.org/demos/app/trix/hg38.ix",
-        "locationType": "UriLocation"
-      },
-      "ixxFilePath": {
-        "uri": "https://jbrowse.org/demos/app/trix/hg38.ixx",
-        "locationType": "UriLocation"
-      },
-      "metaFilePath": {
-        "uri": "https://jbrowse.org/demos/app/trix/hg38_meta.json",
-        "locationType": "UriLocation"
-      },
-      "assemblyNames": ["hg38"]
+      "assemblyNames": ["hg19"]
     }
   ]
 }

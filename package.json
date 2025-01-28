@@ -23,6 +23,7 @@
   },
   "dependencies": {
     "@mui/icons-material": "^6.4.1",
+    "@mui/x-charts-vendor": "^7.20.0",
     "buffer": "^6.0.3",
     "compression": "^1.7.5",
     "dotenv": "^16.4.7",
@@ -43,7 +44,7 @@
     "@eslint/compat": "^1.1.1",
     "@fal-works/esbuild-plugin-global-externals": "^2.1.2",
     "@jbrowse/core": "^2.0.0",
-    "@jbrowse/plugin-linear-genome-view": "^2.4.2",
+    "@jbrowse/plugin-linear-genome-view": "^2.18.0",
     "@mui/material": "^6.1.5",
     "@mui/system": "^6.1.5",
     "@mui/x-data-grid": "^7.3.0",
