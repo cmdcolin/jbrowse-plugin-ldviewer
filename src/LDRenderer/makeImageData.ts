@@ -23,10 +23,9 @@ export async function makeImageData(
   ctx: CanvasRenderingContext2D,
   props: RenderArgsDeserializedWithFeatures & { pluginManager: PluginManager },
 ) {
-  const { regions, bpPerPx, features, stopToken, adapterConfig, colorScheme } =
-    props
+  const { regions, bpPerPx, stopToken, adapterConfig, colorScheme } = props
   const region = regions[0]!
-  const width = (region.end - region.start) / bpPerPx
+  const w = (region.end - region.start) / bpPerPx
   const url = `http://localhost:4730/?ref=${region.refName}&start=${region.start}&end=${region.end}&url=${readConfObject(adapterConfig, 'vcfGzLocation').uri}`
   const ret = await fetch(url)
   if (!ret.ok) {
@@ -37,19 +36,17 @@ export async function makeImageData(
   checkStopToken(stopToken)
 
   const lines = ld.split('\n')
-  const w = width
-
   const boxw = Math.min((w - 200) / lines.length, 18)
   const bw = boxw / Math.sqrt(2)
-  const trans = width / 2 - (lines.length * boxw) / 2
+  const trans = w / 2 - (lines.length * boxw) / 2
 
   ctx.save()
-
-  if (region.reversed === true) {
-    ctx.scale(-1, 1)
-    ctx.translate(-width, 0)
-  }
-  ctx.translate(trans, 90)
+  //
+  //if (region.reversed === true) {
+  //  ctx.scale(-1, 1)
+  //  ctx.translate(-width, 0)
+  //}
+  ctx.translate(trans, 20)
   ctx.rotate(-Math.PI / 4)
   let j = 0
   for (const line of lines) {

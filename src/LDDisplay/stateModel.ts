@@ -1,16 +1,13 @@
-import { getEnv, getSession } from '@jbrowse/core/util'
-import { isAlive, types } from 'mobx-state-tree'
+import { getEnv, getSession, SimpleFeature } from '@jbrowse/core/util'
+import { addDisposer, types } from 'mobx-state-tree'
 
-import {
-  ConfigurationReference,
-  getConf,
-  type AnyConfigurationSchemaType,
-} from '@jbrowse/core/configuration'
-import type { ExportSvgDisplayOptions } from '@jbrowse/plugin-linear-genome-view'
-import type { Instance } from 'mobx-state-tree'
+import { ConfigurationReference, getConf } from '@jbrowse/core/configuration'
 import PluginManager from '@jbrowse/core/PluginManager'
 import LinearGenomeViewPlugin from '@jbrowse/plugin-linear-genome-view'
 
+import type { Instance } from 'mobx-state-tree'
+import type { AnyConfigurationSchemaType } from '@jbrowse/core/configuration'
+import { autorun } from 'mobx'
 /**
  * #stateModel LDDisplay
  * extends
@@ -40,6 +37,12 @@ export default function stateModelFactory(
         configuration: ConfigurationReference(configSchema),
       }),
     )
+    .volatile(() => ({
+      /**
+       * #volatile
+       */
+      featureVolatile: undefined as undefined | SimpleFeature[],
+    }))
     .views(self => {
       const { renderProps: superRenderProps } = self
       return {
@@ -75,6 +78,20 @@ export default function stateModelFactory(
         },
       }
     })
+    .actions(self => ({
+      afterAttach() {
+        addDisposer(
+          self,
+          autorun(async () => {
+            try {
+            } catch (e) {
+              console.error(e)
+              getSession(self).notifyError(`${e}`, e)
+            }
+          }),
+        )
+      },
+    }))
 }
 
 export type LDDisplayStateModel = ReturnType<typeof stateModelFactory>
