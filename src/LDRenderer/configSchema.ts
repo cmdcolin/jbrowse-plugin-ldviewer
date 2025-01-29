@@ -12,29 +12,7 @@ const LDRenderer = ConfigurationSchema(
     /**
      * #slot
      */
-    baseColor: {
-      type: 'color',
-      description: 'base color to be used in the ld alignment',
-      defaultValue: '#f00',
-    },
-    /**
-     * #slot
-     */
-    color: {
-      type: 'color',
-      description: 'the color of each feature in a ld alignment',
-      defaultValue: 'jexl:interpolate(count,scale)',
-      contextVariable: ['count', 'maxScore', 'baseColor', 'scale'],
-    },
-
-    /**
-     * #slot
-     */
-    maxHeight: {
-      type: 'integer',
-      description: 'the maximum height to be used in a ld rendering',
-      defaultValue: 600,
-    },
+    renderPadding: 200,
   },
   { explicitlyTyped: true },
 )

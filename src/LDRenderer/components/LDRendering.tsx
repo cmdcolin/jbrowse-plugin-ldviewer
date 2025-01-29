@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react'
+
 import { PrerenderedCanvas } from '@jbrowse/core/ui'
+import { SimpleFeature, type SimpleFeatureSerialized } from '@jbrowse/core/util'
 import { observer } from 'mobx-react'
 
 import type { Region } from '@jbrowse/core/util/types'
-import { SimpleFeature, type SimpleFeatureSerialized } from '@jbrowse/core/util'
 
 const LDRendering = observer(function (props: {
   blockKey: string

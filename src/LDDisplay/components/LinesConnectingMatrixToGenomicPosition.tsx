@@ -1,4 +1,6 @@
 import React from 'react'
+
+import { getConf } from '@jbrowse/core/configuration'
 import { getContainingView, getSession } from '@jbrowse/core/util'
 import { observer } from 'mobx-react'
 
@@ -47,27 +49,31 @@ const LinesConnectingMatrixToGenomicPosition = observer(function ({
   const { lineZoneHeight, featuresVolatile } = model
   const { offsetPx, assemblyNames, dynamicBlocks } = view
   const assembly = assemblyManager.get(assemblyNames[0]!)
-  const b0 = dynamicBlocks.contentBlocks[0]?.widthPx || 0
-  const w = b0 / (featuresVolatile?.length || 1)
+
+  const padding = getConf(model, ['renderer', 'renderPadding'])
+  const nfeat = featuresVolatile?.length ?? 0
+  const w = dynamicBlocks.contentBlocks[0]?.widthPx ?? padding
+  const boxw = Math.min((w - padding) / nfeat, 18)
+  const trans = w / 2 - (nfeat * boxw) / 2
   const l = Math.max(offsetPx, 0)
   return assembly && featuresVolatile ? (
     <Wrapper exportSVG={exportSVG} model={model}>
       {featuresVolatile.map((f, i) => {
         const ref = f.get('refName')
         const c = view.bpToPx({
-          refName: assembly.getCanonicalRefName(ref) || ref,
+          refName: assembly.getCanonicalRefName(ref) ?? ref,
           coord: f.get('start'),
         })?.offsetPx
-        return c !== undefined ? (
+        return c === undefined ? null : (
           <line
             stroke="#0006"
             key={f.id()}
-            x1={i * w + w / 2}
+            x1={trans + i * boxw + boxw / 2}
             x2={c - l}
             y1={lineZoneHeight}
             y2={0}
           />
-        ) : null
+        )
       })}
     </Wrapper>
   ) : null

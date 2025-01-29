@@ -8,7 +8,7 @@ import tseslint from 'typescript-eslint'
 
 export default tseslint.config(
   {
-    ignores: ['**/dist/**/*', 'eslint.config.mjs', 'esbuild.mjs', 'server/*'],
+    ignores: ['**/dist/**/*', 'eslint.config.mjs', 'esbuild.mjs', 'ldserver/*'],
   },
   {
     languageOptions: {
@@ -105,6 +105,9 @@ export default tseslint.config(
       '@typescript-eslint/restrict-template-expressions': 'off',
       '@typescript-eslint/no-empty-function': 'off',
       '@typescript-eslint/no-deprecated': 'off',
+      '@typescript-eslint/no-explicit-any': 'off',
+      '@typescript-eslint/unbound-method': 'off',
+      '@typescript-eslint/no-unsafe-member-access': 'off',
 
       'unicorn/no-array-for-each': 'off',
       'unicorn/no-null': 'off',

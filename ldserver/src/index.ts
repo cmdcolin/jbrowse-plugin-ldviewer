@@ -114,4 +114,6 @@ app.get('/', async (req, res, next) => {
   }
 })
 
-app.listen(process.env.PORT || 4730)
+const p = process.env.PORT || 4730
+app.listen(p)
+console.log(`listening on ${p}`)

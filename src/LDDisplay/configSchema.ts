@@ -1,9 +1,9 @@
 import { ConfigurationSchema } from '@jbrowse/core/configuration'
+import LinearGenomeViewPlugin from '@jbrowse/plugin-linear-genome-view'
 
 import configSchema from '../LDRenderer/configSchema'
 
 import type PluginManager from '@jbrowse/core/PluginManager'
-import LinearGenomeViewPlugin from '@jbrowse/plugin-linear-genome-view'
 
 /**
  * #config LDDisplay

@@ -1,7 +1,8 @@
 import React, { useMemo } from 'react'
 
-import { observer } from 'mobx-react'
 import { getEnv } from '@jbrowse/core/util'
+import { observer } from 'mobx-react'
+
 import LinesConnectingMatrixToGenomicPosition from './LinesConnectingMatrixToGenomicPosition'
 
 import type { LDDisplayModel } from '../stateModel'
@@ -19,7 +20,7 @@ const LDDisplayComponent = observer(function (props: {
     ) as LinearGenomeViewPlugin
     const { BaseLinearDisplayComponent } = LGVPlugin.exports
     return BaseLinearDisplayComponent
-  }, [])
+  }, [model])
 
   return (
     <div style={{ position: 'relative' }}>

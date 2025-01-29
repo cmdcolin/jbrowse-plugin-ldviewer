@@ -1,4 +1,3 @@
-import { readConfObject } from '@jbrowse/core/configuration'
 import ServerSideRendererType from '@jbrowse/core/pluggableElementTypes/renderers/ServerSideRendererType'
 import { renderToAbstractCanvas } from '@jbrowse/core/util/offscreenCanvasUtils'
 
@@ -6,8 +5,6 @@ import type { AnyConfigurationModel } from '@jbrowse/core/configuration'
 import type {
   RenderArgs as ServerSideRenderArgs,
   RenderArgsDeserialized as ServerSideRenderArgsDeserialized,
-  ResultsDeserialized as ServerSideResultsDeserialized,
-  ResultsSerialized as ServerSideResultsSerialized,
 } from '@jbrowse/core/pluggableElementTypes/renderers/ServerSideRendererType'
 import type { Region } from '@jbrowse/core/util/types'
 
@@ -23,18 +20,14 @@ export interface RenderArgsDeserialized
   adapterConfig: AnyConfigurationModel
 }
 
-export type ResultsSerialized = ServerSideResultsSerialized
-
-export type ResultsDeserialized = ServerSideResultsDeserialized
-
 export default class LDRenderer extends ServerSideRendererType {
   supportsSVG = true
 
   async render(renderProps: RenderArgsDeserialized) {
-    const { config, regions, bpPerPx } = renderProps
+    const { regions, bpPerPx } = renderProps
     const region = regions[0]!
     const width = (region.end - region.start) / bpPerPx
-    const height = readConfObject(config, 'maxHeight')
+    const height = width / Math.sqrt(2)
 
     const { makeImageData } = await import('./makeImageData')
     const res = await renderToAbstractCanvas(width, height, renderProps, ctx =>
@@ -59,8 +52,3 @@ export default class LDRenderer extends ServerSideRendererType {
     }
   }
 }
-
-export type {
-  RenderArgsSerialized,
-  RenderResults,
-} from '@jbrowse/core/pluggableElementTypes/renderers/ServerSideRendererType'

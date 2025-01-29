@@ -1,13 +1,12 @@
-import { getEnv, getSession, SimpleFeature } from '@jbrowse/core/util'
-import { addDisposer, types } from 'mobx-state-tree'
-
-import { ConfigurationReference, getConf } from '@jbrowse/core/configuration'
 import PluginManager from '@jbrowse/core/PluginManager'
+import { ConfigurationReference, getConf } from '@jbrowse/core/configuration'
+import { SimpleFeature, getEnv, getSession } from '@jbrowse/core/util'
 import LinearGenomeViewPlugin from '@jbrowse/plugin-linear-genome-view'
+import { types } from 'mobx-state-tree'
 
-import type { Instance } from 'mobx-state-tree'
+
 import type { AnyConfigurationSchemaType } from '@jbrowse/core/configuration'
-import { autorun } from 'mobx'
+import type { Instance } from 'mobx-state-tree'
 /**
  * #stateModel LDDisplay
  * extends
@@ -74,6 +73,7 @@ export default function stateModelFactory(
          * #method
          */
         renderProps() {
+          const session = getSession(self)
           const config = self.rendererType.configSchema.create(
             {
               ...getConf(self, 'renderer'),
@@ -86,6 +86,7 @@ export default function stateModelFactory(
             config,
             rpcDriverName: self.rpcDriverName,
             displayModel: self,
+            ldserver: getConf(session, ['LDViewerPlugin', 'ldserver']),
           }
         },
       }

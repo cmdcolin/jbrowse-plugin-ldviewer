@@ -1,8 +1,8 @@
 import DisplayType from '@jbrowse/core/pluggableElementTypes/DisplayType'
 
+import LDDisplayComponent from './components/LDDisplay'
 import configSchemaF from './configSchema'
 import stateModelFactory from './stateModel'
-import LDDisplayComponent from './components/LDDisplay'
 
 import type PluginManager from '@jbrowse/core/PluginManager'
 
