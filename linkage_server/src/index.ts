@@ -8,7 +8,7 @@ const app = express()
 const settings = {
   plink: 'plink', // can be full path
   tabix: 'tabix', // can be full path,
-  deleteFiles: 1,
+  deleteFiles: 0,
 }
 
 app.use(function (req, res, next) {
@@ -21,16 +21,25 @@ app.use(function (req, res, next) {
 })
 
 app.get('/', function (req, res) {
-  const ref = req.query.ref
-  const start = Math.round(req.query.start)
-  const end = Math.round(req.query.end)
-  const maf = req.query.maf || 0.01
-  const vcf = req.query.url
+  const { query } = req
+  const { maf: maf2, url, start: start2, ref, end: end2 } = query
+  if (
+    url === undefined ||
+    start2 === undefined ||
+    end2 === undefined ||
+    ref === undefined
+  ) {
+    throw new Error('Failed to read query')
+  }
+  const start = Math.round(+start2)
+  const end = Math.round(+end2)
+  const maf = maf2 || 0.01
+  console.log({ ref, start, end, url })
   const proc = child.spawn(settings.tabix, [
     '-p',
     'vcf',
     '-h',
-    vcf,
+    `${url}`,
     ref + ':' + start + '-' + end,
   ])
 
@@ -62,9 +71,10 @@ app.get('/', function (req, res) {
     p.on('exit', function () {
       try {
         res.send(
-          fs.readFileSync(outputname + '.snplist') +
-            '\nbreak\n' +
-            fs.readFileSync(outputname + '.ld'),
+          JSON.stringify({
+            snps: fs.readFileSync(outputname + '.snplist', 'utf8'),
+            ld: fs.readFileSync(outputname + '.ld', 'utf8'),
+          }),
         )
         if (settings.deleteFiles) {
           fs.unlinkSync(vcfname)
@@ -81,4 +91,4 @@ app.get('/', function (req, res) {
   })
 })
 
-app.listen(process.env.EXPRESS_PORT || 4730)
+app.listen(process.env.PORT || 4730)
