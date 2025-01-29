@@ -1,27 +1,26 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { PrerenderedCanvas } from '@jbrowse/core/ui'
 import { observer } from 'mobx-react'
 
 import type { Region } from '@jbrowse/core/util/types'
+import { SimpleFeature, type SimpleFeatureSerialized } from '@jbrowse/core/util'
 
-const LDRendering = observer(function LDRendering(props: {
+const LDRendering = observer(function (props: {
   blockKey: string
   width: number
   height: number
   regions: Region[]
   bpPerPx: number
+  displayModel: any
+  simplifiedFeatures: SimpleFeatureSerialized[]
 }) {
-  const { width, height } = props
-  const canvasWidth = Math.ceil(width)
-  // need to call this in render so we get the right observer behavior
-  return (
-    <div style={{ position: 'relative', width: canvasWidth, height }}>
-      <PrerenderedCanvas
-        {...props}
-        style={{ position: 'absolute', left: 0, top: 0 }}
-      />
-    </div>
-  )
+  const { simplifiedFeatures, displayModel } = props
+  useEffect(() => {
+    displayModel.setSimplifiedFeatures(
+      simplifiedFeatures.map(f => new SimpleFeature(f)),
+    )
+  }, [displayModel, simplifiedFeatures])
+  return <PrerenderedCanvas {...props} />
 })
 
 export default LDRendering

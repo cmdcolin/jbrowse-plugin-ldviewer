@@ -41,7 +41,19 @@ export default function stateModelFactory(
       /**
        * #volatile
        */
-      featureVolatile: undefined as undefined | SimpleFeature[],
+      featuresVolatile: undefined as undefined | SimpleFeature[],
+      /**
+       * #volatile
+       */
+      lineZoneHeight: 50,
+    }))
+    .actions(self => ({
+      /**
+       * #action
+       */
+      setSimplifiedFeatures(arg: SimpleFeature[]) {
+        self.featuresVolatile = arg
+      },
     }))
     .views(self => {
       const { renderProps: superRenderProps } = self
@@ -78,20 +90,6 @@ export default function stateModelFactory(
         },
       }
     })
-    .actions(self => ({
-      afterAttach() {
-        addDisposer(
-          self,
-          autorun(async () => {
-            try {
-            } catch (e) {
-              console.error(e)
-              getSession(self).notifyError(`${e}`, e)
-            }
-          }),
-        )
-      },
-    }))
 }
 
 export type LDDisplayStateModel = ReturnType<typeof stateModelFactory>

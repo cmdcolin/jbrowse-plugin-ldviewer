@@ -1,16 +1,6 @@
-import { getConf, readConfObject } from '@jbrowse/core/configuration'
-import { getAdapter } from '@jbrowse/core/data_adapters/dataAdapterCache'
-import { colord } from '@jbrowse/core/util/colord'
+import { readConfObject } from '@jbrowse/core/configuration'
 import { checkStopToken } from '@jbrowse/core/util/stopToken'
-import { interpolateRgbBasis } from '@mui/x-charts-vendor/d3-interpolate'
-import {
-  scaleSequential,
-  scaleSequentialLog,
-} from '@mui/x-charts-vendor/d3-scale'
-
-import interpolateViridis from './viridis'
-
-import type { RenderArgsDeserializedWithFeatures } from './LDRenderer'
+import type { RenderArgsDeserialized } from './LDRenderer'
 import type PluginManager from '@jbrowse/core/PluginManager'
 import type { RenderArgs as ServerSideRenderArgs } from '@jbrowse/core/pluggableElementTypes/renderers/ServerSideRendererType'
 import type { Region } from '@jbrowse/core/util/types'
@@ -21,12 +11,13 @@ export interface RenderArgs extends ServerSideRenderArgs {
 
 export async function makeImageData(
   ctx: CanvasRenderingContext2D,
-  props: RenderArgsDeserializedWithFeatures & { pluginManager: PluginManager },
+  props: RenderArgsDeserialized & { pluginManager: PluginManager },
 ) {
-  const { regions, bpPerPx, stopToken, adapterConfig, colorScheme } = props
+  const { regions, bpPerPx, stopToken, adapterConfig } = props
   const region = regions[0]!
   const w = (region.end - region.start) / bpPerPx
   const url = `http://localhost:4730/?ref=${region.refName}&start=${region.start}&end=${region.end}&url=${readConfObject(adapterConfig, 'vcfGzLocation').uri}`
+
   const ret = await fetch(url)
   if (!ret.ok) {
     throw new Error(`Failed to fetch ${url}`)
@@ -46,7 +37,7 @@ export async function makeImageData(
   //  ctx.scale(-1, 1)
   //  ctx.translate(-width, 0)
   //}
-  ctx.translate(trans, 20)
+  ctx.translate(trans, 0)
   ctx.rotate(-Math.PI / 4)
   let j = 0
   for (const line of lines) {
@@ -59,5 +50,7 @@ export async function makeImageData(
     j++
   }
   ctx.restore()
-  return undefined
+  return {
+    simplifiedFeatures: snps,
+  }
 }
