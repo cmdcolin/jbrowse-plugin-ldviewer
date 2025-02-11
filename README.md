@@ -17,7 +17,7 @@ yarn #get main plugin deps
 
 cd ldserver
 yarn #get server deps
-yarn start #start srver, dfault on 4730
+yarn start #start server, default on 4730
 ```
 
 ## Config
@@ -38,8 +38,8 @@ If you need to use it on a public server, you can edit your jbrowse config .g.
 
 ## Future/ideas
 
-The ldserver is a barrier to easy plug-n-play usage of th plugin since it
-requirs some 'server side admin' (normal jbrowse usage is very client side
+The ldserver is a barrier to easy plug-n-play usage of the plugin since it
+requires some 'server side admin' (normal jbrowse usage is very client side
 focused)
 
 However, I welcome you to try it out!
@@ -51,7 +51,7 @@ results on human 1000g data
 We could also consider
 
 - calculating whatever plink is doing on the client side
-- if not calculate client sid, we could host ldserver as a public utility, and
+- if not calculate client side, we could host ldserver as a public utility, and
   set default config to point at it
-- support efficient file format like LDmat. it is currntly aimd as smallish
+- support efficient file format like LDmat. it is currently aimed as smallish
   regions
