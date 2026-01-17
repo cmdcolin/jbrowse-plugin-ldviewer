@@ -1,6 +1,6 @@
 {
   "version": "0.0.5",
-  "name": "jbrowse-plugin-graphgenomeviewer",
+  "name": "jbrowse-plugin-ldviewer",
   "keywords": [
     "jbrowse",
     "jbrowse2"
@@ -30,7 +30,6 @@
     "es-dirname": "^0.1.0",
     "express": "^4.21.2",
     "fs-extra": "^11.3.0",
-    "graphgenomeviewer": "^5.0.4",
     "multer": "^1.4.5-lts.1",
     "node-cron": "^3.0.3",
     "path-is-inside": "^1.0.2",
